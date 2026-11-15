@@ -276,7 +276,7 @@
       <h1>Hussam Afour</h1>
       <div class="title">Stellvertretende Einrichtungsleitung</div>
       <div class="org">
-        <img src="albatros-logo-white.png" alt="Albatros gGmbH" style="height:18px;vertical-align:middle;opacity:.85;">
+        <img src="albatros-logo-white.png" alt="Albatros gGmbH" style="height:30px;vertical-align:middle;opacity:1;">
       </div>
 
       <div class="locations">
@@ -319,10 +319,10 @@
       </div>
 
       <div class="actions">
-        <button class="btn btn-primary" id="saveBtn">
+        <a class="btn btn-primary" id="saveBtn" href="Hussam_Afour.vcf">
           <svg viewBox="0 0 24 24" stroke="#17130a" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
           In Kontakte speichern
-        </button>
+        </a>
         <a class="btn btn-secondary" href="mailto:h.afour@albatrosggmbh.de">
           <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><path d="M22 6l-10 7L2 6"/></svg>
           E-Mail schreiben
@@ -337,29 +337,7 @@
   </div>
 </div>
 
-<div class="toast" id="toast">Kontaktdatei wird heruntergeladen…</div>
-
 <script>
-function vcard(){
-  return [
-    "BEGIN:VCARD",
-    "VERSION:3.0",
-    "N:Afour;Hussam;;;",
-    "FN:Hussam Afour",
-    "ORG:Albatros gGmbH",
-    "TITLE:Stellvertretende Einrichtungsleitung",
-    "TEL;TYPE=CELL:+4917619831222",
-    "TEL;TYPE=WORK,VOICE:+4930403638428",
-    "TEL;TYPE=WORK,VOICE:+4930403638424",
-    "EMAIL;TYPE=WORK:h.afour@albatrosggmbh.de",
-    "URL:https://www.albatrosggmbh.de",
-    "URL:https://www.linkedin.com/in/hussam-afour-5669b4244",
-    "ADR;TYPE=WORK:;;Wartenberger Straße 120;Berlin;;13053;Deutschland",
-    "NOTE:GU Wartenberger Straße 120 & GU Hagenower Ring 47/49",
-    "END:VCARD"
-  ].join("\r\n");
-}
-
 /* subtle 3D tilt that follows the pointer/finger, like a reflective metal card */
 (function(){
   var card = document.querySelector(".card");
@@ -386,29 +364,6 @@ document.getElementById("emblemSvg").addEventListener("click", function(){
   setTimeout(function(){ el.style.filter = ""; }, 350);
 });
 
-var toast = document.getElementById("toast");
-function showToast(msg){
-  toast.textContent = msg;
-  toast.classList.add("show");
-  setTimeout(function(){ toast.classList.remove("show"); }, 2200);
-}
-
-document.getElementById("saveBtn").addEventListener("click", function(){
-  try{
-    var blob = new Blob([vcard()], {type:"text/vcard;charset=utf-8"});
-    var url = URL.createObjectURL(blob);
-    var a = document.createElement("a");
-    a.href = url;
-    a.download = "Hussam_Afour.vcf";
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    setTimeout(function(){ URL.revokeObjectURL(url); }, 3000);
-    showToast("Kontaktdatei wird heruntergeladen…");
-  }catch(e){
-    showToast("Fehler — bitte Nummer/E-Mail antippen zum Kopieren.");
-  }
-});
 </script>
 </body>
 </html>
