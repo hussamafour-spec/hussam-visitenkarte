@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Hussam Afour</title>
+<style>
+  :root{
+    --black:#0a0a0b;
+    --black2:#141416;
+    --gold-1:#f3dd8a;
+    --gold-2:#c9a43c;
+    --gold-3:#8a6d1f;
+    --text:#f3ede0;
+    --text-dim:#b9b2a0;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    min-height:100vh;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:
+      radial-gradient(900px 600px at 50% -8%, #1c1b17 0%, var(--black) 55%),
+      var(--black);
+    color:var(--text);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:30px 16px 50px;
+    overflow-x:hidden;
+  }
+
+  .wrap{width:100%;max-width:410px;}
+
+  .card{
+    position:relative;
+    border-radius:22px;
+    padding:40px 26px 26px;
+    background:
+      linear-gradient(135deg, rgba(243,221,138,0.05) 0%, transparent 35%),
+      linear-gradient(145deg, #131315 0%, #0c0c0d 100%);
+    border:1px solid rgba(201,164,60,0.35);
+    box-shadow:
+      0 0 0 1px rgba(201,164,60,0.08) inset,
+      0 25px 60px rgba(0,0,0,0.55);
+    overflow:hidden;
+    animation:rise .7s cubic-bezier(.2,.8,.2,1);
+    transform-style:preserve-3d;
+    transition:transform .15s ease-out;
+    will-change:transform;
+  }
+  @keyframes rise{
+    from{opacity:0; transform:translateY(18px) scale(.985);}
+    to{opacity:1; transform:translateY(0) scale(1);}
+  }
+
+  /* corner diagonal gold accents, confined to the corners (not crossing the text) */
+  .corner-line{
+    position:absolute;
+    width:150px; height:2px;
+    background:linear-gradient(90deg, var(--gold-1), transparent);
+    opacity:.5;
+    pointer-events:none;
+  }
+  .corner-line.tl{ top:22px; left:-40px; transform:rotate(38deg); }
+  .corner-line.br{ bottom:18px; right:-40px; transform:rotate(38deg); background:linear-gradient(270deg, var(--gold-1), transparent); }
+
+  .shine{
+    position:absolute; inset:0;
+    background:linear-gradient(115deg, transparent 38%, rgba(243,221,138,0.22) 49%, rgba(243,221,138,0.05) 54%, transparent 62%);
+    background-size:260% 260%;
+    animation:sweep 4.2s ease-in-out infinite;
+    pointer-events:none;
+    mix-blend-mode:screen;
+  }
+  @keyframes sweep{
+    0%{background-position:170% 0%;}
+    50%{background-position:-50% 100%;}
+    100%{background-position:170% 0%;}
+  }
+
+  .content{position:relative; z-index:1;}
+
+  .emblem-frame{
+    display:flex; justify-content:center; margin-bottom:14px; position:relative;
+  }
+  .emblem{width:118px;height:118px; animation:emblow 3.4s ease-in-out infinite; cursor:pointer;}
+  @keyframes emblow{
+    0%,100%{ filter:drop-shadow(0 0 3px rgba(243,221,138,0.35)); }
+    50%{ filter:drop-shadow(0 0 14px rgba(243,221,138,0.85)); }
+  }
+  .ring-rotate{ animation:spin 14s linear infinite; transform-origin:60px 60px; }
+  @keyframes spin{ from{transform:rotate(0deg);} to{transform:rotate(360deg);} }
+
+  h1{
+    text-align:center;
+    font-family:Georgia,"Times New Roman",serif;
+    font-size:25px;
+    letter-spacing:.3px;
+    margin:0 0 5px;
+    background:linear-gradient(100deg, var(--gold-3) 0%, var(--gold-1) 25%, var(--gold-2) 40%, var(--gold-1) 55%, var(--gold-3) 75%, var(--gold-1) 100%);
+    background-size:300% 100%;
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+    animation:goldtext 3.5s linear infinite;
+    text-shadow:
+      0 1px 0 rgba(255,255,255,0.22),
+      0 2px 1px rgba(0,0,0,0.55),
+      0 -1px 1px rgba(0,0,0,0.35);
+  }
+  @keyframes goldtext{
+    0%{background-position:0% 50%;}
+    100%{background-position:-300% 50%;}
+  }
+  .title{
+    text-align:center;
+    color:var(--text);
+    font-size:14px;
+    font-weight:600;
+    letter-spacing:.3px;
+    margin-bottom:3px;
+  }
+  .org{
+    text-align:center;
+    color:var(--text-dim);
+    font-size:12.5px;
+    margin-bottom:18px;
+    letter-spacing:.5px;
+  }
+
+  .locations{
+    display:flex; gap:8px; justify-content:center; flex-wrap:wrap;
+    margin-bottom:22px;
+  }
+  .loc-chip{
+    font-size:10.8px;
+    padding:6px 11px;
+    border-radius:999px;
+    background:rgba(201,164,60,0.08);
+    border:1px solid rgba(201,164,60,0.4);
+    color:var(--gold-1);
+    white-space:nowrap;
+  }
+
+  .divider{
+    height:1px;
+    background:linear-gradient(90deg, transparent, rgba(201,164,60,0.5), transparent);
+    margin:0 0 18px;
+  }
+
+  .rows{display:flex;flex-direction:column;gap:9px;margin-bottom:22px;}
+  .row{
+    display:flex; align-items:center; gap:13px;
+    padding:11px 13px;
+    border-radius:14px;
+    background:rgba(255,255,255,0.025);
+    border:1px solid rgba(201,164,60,0.18);
+    text-decoration:none;
+    color:var(--text);
+    transition:background .15s ease, border-color .15s ease, transform .1s ease;
+  }
+  .row:active{transform:scale(0.98);}
+  .row:hover{background:rgba(201,164,60,0.07); border-color:rgba(201,164,60,0.4);}
+  .icon{
+    width:34px;height:34px;border-radius:50%;
+    border:1px solid var(--gold-2);
+    display:flex;align-items:center;justify-content:center;
+    flex-shrink:0;
+    background:radial-gradient(circle at 30% 30%, rgba(243,221,138,0.18), transparent 70%);
+  }
+  .icon svg{width:16px;height:16px;stroke:var(--gold-1);fill:none;}
+  .row-text{display:flex;flex-direction:column;min-width:0;}
+  .row-label{font-size:10.5px;color:var(--text-dim);}
+  .row-value{font-size:14px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+
+  .actions{display:flex;flex-direction:column;gap:10px;}
+  .btn{
+    display:flex;align-items:center;justify-content:center;gap:9px;
+    padding:14px 18px;border-radius:14px;
+    font-size:14.5px;font-weight:700;
+    border:none;cursor:pointer;
+    text-decoration:none;
+    letter-spacing:.2px;
+    transition:transform .1s ease, filter .15s ease;
+  }
+  .btn:active{transform:scale(0.97);}
+  .btn-primary{
+    background:linear-gradient(90deg, var(--gold-3), var(--gold-1) 50%, var(--gold-2));
+    color:#17130a;
+  }
+  .btn-primary:hover{filter:brightness(1.08);}
+  .btn-secondary{
+    background:transparent;
+    color:var(--gold-1);
+    border:1px solid rgba(201,164,60,0.5);
+  }
+  .btn svg{width:16px;height:16px;}
+
+  footer{
+    text-align:center;
+    margin-top:20px;
+    font-size:10.5px;
+    color:var(--text-dim);
+    opacity:.7;
+    line-height:1.6;
+  }
+  footer a{color:var(--text-dim); text-decoration:underline;}
+
+  .toast{
+    position:fixed; left:50%; bottom:26px; transform:translateX(-50%) translateY(20px);
+    background:var(--gold-1); color:#17130a; font-size:13px; font-weight:600;
+    padding:10px 18px; border-radius:999px;
+    opacity:0; transition:opacity .25s ease, transform .25s ease;
+    pointer-events:none;
+    z-index:5;
+    white-space:nowrap;
+  }
+  .toast.show{opacity:1; transform:translateX(-50%) translateY(0);}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <div class="card">
+    <div class="corner-line tl"></div>
+    <div class="corner-line br"></div>
+    <div class="shine"></div>
+    <div class="content">
+
+      <div class="emblem-frame">
+        <svg class="emblem" id="emblemSvg" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#8a6d1f"/>
+              <stop offset="50%" stop-color="#f3dd8a"/>
+              <stop offset="100%" stop-color="#c9a43c"/>
+            </linearGradient>
+          </defs>
+
+          <!-- diamond lattice frame, echoing the reference card -->
+          <g class="ring-rotate" stroke="url(#g1)" stroke-width="0.8" fill="none" opacity="0.55">
+            <rect x="26" y="26" width="68" height="68" transform="rotate(45 60 60)"/>
+            <line x1="60" y1="4" x2="60" y2="30"/>
+            <line x1="60" y1="90" x2="60" y2="116"/>
+            <line x1="4" y1="60" x2="30" y2="60"/>
+            <line x1="90" y1="60" x2="116" y2="60"/>
+          </g>
+          <circle cx="60" cy="60" r="44" fill="none" stroke="url(#g1)" stroke-width="1"/>
+
+          <!-- scale of justice, pans replaced by open hands -->
+          <g fill="none" stroke="url(#g1)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+            <!-- base -->
+            <line x1="60" y1="86" x2="60" y2="30" />
+            <line x1="47" y1="86" x2="73" y2="86" />
+            <!-- beam -->
+            <line x1="38" y1="38" x2="82" y2="38" />
+            <circle cx="60" cy="36" r="2.4" fill="url(#g1)" stroke="none"/>
+            <!-- chains -->
+            <line x1="38" y1="38" x2="33" y2="54" />
+            <line x1="82" y1="38" x2="87" y2="54" />
+          </g>
+          <!-- left hand (palm up, cupped) -->
+          <g fill="url(#g1)" stroke="none">
+            <path d="M24 58c1-3 4-4 6-2 1-3 4-4 6-2 1-2 4-3 6-1 2-1 5 0 5 3 0 5-4 10-11 11-7 1-12-3-12-9z"/>
+          </g>
+          <!-- right hand (palm up, cupped), mirrored -->
+          <g fill="url(#g1)" stroke="none" transform="translate(120,0) scale(-1,1)">
+            <path d="M24 58c1-3 4-4 6-2 1-3 4-4 6-2 1-2 4-3 6-1 2-1 5 0 5 3 0 5-4 10-11 11-7 1-12-3-12-9z"/>
+          </g>
+
+          <text x="60" y="97" text-anchor="middle" font-family="Georgia, serif" font-size="11" letter-spacing="2" fill="url(#g1)">H·A</text>
+        </svg>
+      </div>
+
+      <h1>Hussam Afour</h1>
+      <div class="title">Stellvertretende Einrichtungsleitung</div>
+      <div class="org">
+        <img src="albatros-logo-white.png" alt="Albatros gGmbH" style="height:18px;vertical-align:middle;opacity:.85;">
+      </div>
+
+      <div class="locations">
+        <span class="loc-chip">GU Wartenberger Str. 120</span>
+        <span class="loc-chip">GU Hagenower Ring 47/49</span>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="rows">
+        <a class="row" href="tel:+4917619831222">
+          <div class="icon"><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+          <div class="row-text"><div class="row-label">Mobil</div><div class="row-value">0176 1983 1222</div></div>
+        </a>
+
+        <a class="row" href="mailto:h.afour@albatrosggmbh.de">
+          <div class="icon"><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><path d="M22 6l-10 7L2 6"/></svg></div>
+          <div class="row-text"><div class="row-label">E-Mail</div><div class="row-value">h.afour@albatrosggmbh.de</div></div>
+        </a>
+
+        <a class="row" href="tel:+4930403638428">
+          <div class="icon"><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+          <div class="row-text"><div class="row-label">Büro · Wartenberger Str.</div><div class="row-value">030 403638-428</div></div>
+        </a>
+
+        <a class="row" href="tel:+4930403638424">
+          <div class="icon"><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+          <div class="row-text"><div class="row-label">Büro · Hagenower Ring</div><div class="row-value">030 403638-424</div></div>
+        </a>
+
+        <a class="row" href="https://www.albatrosggmbh.de" target="_blank" rel="noopener">
+          <div class="icon"><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>
+          <div class="row-text"><div class="row-label">Webseite</div><div class="row-value">albatrosggmbh.de</div></div>
+        </a>
+
+        <a class="row" href="https://www.linkedin.com/in/hussam-afour-5669b4244" target="_blank" rel="noopener">
+          <div class="icon"><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></div>
+          <div class="row-text"><div class="row-label">LinkedIn</div><div class="row-value">hussam-afour</div></div>
+        </a>
+      </div>
+
+      <div class="actions">
+        <button class="btn btn-primary" id="saveBtn">
+          <svg viewBox="0 0 24 24" stroke="#17130a" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          In Kontakte speichern
+        </button>
+        <a class="btn btn-secondary" href="mailto:h.afour@albatrosggmbh.de">
+          <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><path d="M22 6l-10 7L2 6"/></svg>
+          E-Mail schreiben
+        </a>
+      </div>
+
+      <footer>
+        Albatros gGmbH · Berliner Str. 14, 13507 Berlin<br>
+        <a href="https://www.albatrosggmbh.de/datenschutz" target="_blank" rel="noopener">Datenschutzhinweise</a>
+      </footer>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast">Kontaktdatei wird heruntergeladen…</div>
+
+<script>
+function vcard(){
+  return [
+    "BEGIN:VCARD",
+    "VERSION:3.0",
+    "N:Afour;Hussam;;;",
+    "FN:Hussam Afour",
+    "ORG:Albatros gGmbH",
+    "TITLE:Stellvertretende Einrichtungsleitung",
+    "TEL;TYPE=CELL:+4917619831222",
+    "TEL;TYPE=WORK,VOICE:+4930403638428",
+    "TEL;TYPE=WORK,VOICE:+4930403638424",
+    "EMAIL;TYPE=WORK:h.afour@albatrosggmbh.de",
+    "URL:https://www.albatrosggmbh.de",
+    "URL:https://www.linkedin.com/in/hussam-afour-5669b4244",
+    "ADR;TYPE=WORK:;;Wartenberger Straße 120;Berlin;;13053;Deutschland",
+    "NOTE:GU Wartenberger Straße 120 & GU Hagenower Ring 47/49",
+    "END:VCARD"
+  ].join("\r\n");
+}
+
+/* subtle 3D tilt that follows the pointer/finger, like a reflective metal card */
+(function(){
+  var card = document.querySelector(".card");
+  if(!card) return;
+  function setTilt(px, py){
+    var rect = card.getBoundingClientRect();
+    var rx = ((py - rect.top) / rect.height - 0.5) * -8;
+    var ry = ((px - rect.left) / rect.width - 0.5) * 10;
+    card.style.transform = "perspective(800px) rotateX(" + rx + "deg) rotateY(" + ry + "deg)";
+  }
+  function reset(){ card.style.transform = "perspective(800px) rotateX(0deg) rotateY(0deg)"; }
+  card.addEventListener("pointermove", function(e){ setTilt(e.clientX, e.clientY); });
+  card.addEventListener("pointerleave", reset);
+  card.addEventListener("touchmove", function(e){
+    if(e.touches && e.touches[0]) setTilt(e.touches[0].clientX, e.touches[0].clientY);
+  }, {passive:true});
+  card.addEventListener("touchend", reset);
+})();
+
+/* tap the emblem for a little gold sparkle burst */
+document.getElementById("emblemSvg").addEventListener("click", function(){
+  var el = this;
+  el.style.filter = "drop-shadow(0 0 20px rgba(243,221,138,1))";
+  setTimeout(function(){ el.style.filter = ""; }, 350);
+});
+
+var toast = document.getElementById("toast");
+function showToast(msg){
+  toast.textContent = msg;
+  toast.classList.add("show");
+  setTimeout(function(){ toast.classList.remove("show"); }, 2200);
+}
+
+document.getElementById("saveBtn").addEventListener("click", function(){
+  try{
+    var blob = new Blob([vcard()], {type:"text/vcard;charset=utf-8"});
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement("a");
+    a.href = url;
+    a.download = "Hussam_Afour.vcf";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(function(){ URL.revokeObjectURL(url); }, 3000);
+    showToast("Kontaktdatei wird heruntergeladen…");
+  }catch(e){
+    showToast("Fehler — bitte Nummer/E-Mail antippen zum Kopieren.");
+  }
+});
+</script>
+</body>
+</html>
