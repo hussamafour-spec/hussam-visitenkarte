@@ -79,7 +79,46 @@
   .content{position:relative; z-index:1;}
 
   .emblem-frame{
-    display:flex; justify-content:center; margin-bottom:14px; position:relative;
+    display:flex; justify-content:center; margin-bottom:10px; position:relative;
+    perspective:1200px;
+  }
+  .flipper{
+    position:relative;
+    width:168px;height:168px;
+    cursor:pointer;
+    transition:transform .8s cubic-bezier(.4,.1,.2,1);
+    transform-style:preserve-3d;
+  }
+  .flipper.flipped{ transform:rotateY(180deg); }
+  .face{
+    position:absolute;
+    backface-visibility:hidden;
+    -webkit-backface-visibility:hidden;
+  }
+  .front-face{ inset:0; }
+  .back-face{
+    width:215px;height:215px;
+    left:50%;top:50%;
+    margin-left:-107.5px;margin-top:-107.5px;
+    transform:rotateY(180deg);
+    border-radius:22px;
+    overflow:hidden;
+    background:#f1e2cd;
+    box-shadow:
+      0 0 0 3px rgba(13,9,5,0.9),
+      0 0 0 4px rgba(181,117,47,0.55),
+      0 10px 30px rgba(0,0,0,0.65);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .back-face img{ width:88%; height:88%; object-fit:contain; }
+  .flip-hint{
+    text-align:center;
+    font-size:11px;
+    color:var(--text-dim);
+    opacity:.75;
+    margin-bottom:14px;
+    letter-spacing:.2px;
+    transition:opacity .2s ease;
   }
   .emblem-clip{
     width:168px;height:168px;
@@ -256,11 +295,17 @@
     <div class="content">
 
       <div class="emblem-frame">
-        <div class="emblem-clip">
-          <img class="emblem" id="emblemSvg" src="emblem-bronze.png" alt="Wappen">
-          <div class="emblem-sheen"></div>
+        <div class="flipper" id="flipper">
+          <div class="emblem-clip face front-face">
+            <img class="emblem" id="emblemSvg" src="emblem-bronze.png" alt="Wappen">
+            <div class="emblem-sheen"></div>
+          </div>
+          <div class="qr-back face back-face">
+            <img src="qr-panel.png" alt="QR-Code zur Visitenkarte">
+          </div>
         </div>
       </div>
+      <div class="flip-hint" id="flipHint">Antippen zum Scannen &amp; Teilen</div>
 
       <h1>Hussam Afour</h1>
       <div class="title">Stellvertretende Einrichtungsleitung</div>
@@ -343,12 +388,16 @@
   card.addEventListener("touchend", reset);
 })();
 
-/* tap the emblem for a little gold sparkle burst */
-document.getElementById("emblemSvg").addEventListener("click", function(){
-  var el = this;
-  el.style.filter = "drop-shadow(0 0 20px rgba(232,189,129,1))";
-  setTimeout(function(){ el.style.filter = ""; }, 350);
-});
+/* tap the emblem to flip it and reveal the QR code on the back */
+(function(){
+  var flipper = document.getElementById("flipper");
+  var hint = document.getElementById("flipHint");
+  if(!flipper) return;
+  flipper.addEventListener("click", function(){
+    var flipped = flipper.classList.toggle("flipped");
+    hint.textContent = flipped ? "Antippen zum Zurückdrehen" : "Antippen zum Scannen & Teilen";
+  });
+})();
 
 </script>
 </body>
