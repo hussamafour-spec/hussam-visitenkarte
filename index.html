@@ -39,14 +39,27 @@
     padding:40px 26px 26px;
     background: linear-gradient(145deg, #231609 0%, #150c07 100%);
     border:1px solid rgba(181,117,47,0.4);
-    box-shadow:
-      0 0 0 1px rgba(181,117,47,0.1) inset,
-      0 25px 60px rgba(0,0,0,0.6);
     overflow:hidden;
-    animation:rise .7s cubic-bezier(.2,.8,.2,1);
+    animation:rise .7s cubic-bezier(.2,.8,.2,1), breathe 5s ease-in-out .7s infinite;
     transform-style:preserve-3d;
     transition:transform .15s ease-out;
     will-change:transform;
+  }
+  @keyframes breathe{
+    0%,100%{
+      box-shadow:
+        0 0 0 1px rgba(181,117,47,0.1) inset,
+        0 25px 60px rgba(0,0,0,0.6),
+        0 0 18px rgba(181,117,47,0.08);
+      border-color:rgba(181,117,47,0.4);
+    }
+    50%{
+      box-shadow:
+        0 0 0 1px rgba(202,160,119,0.22) inset,
+        0 25px 60px rgba(0,0,0,0.6),
+        0 0 34px rgba(202,160,119,0.22);
+      border-color:rgba(202,160,119,0.65);
+    }
   }
   @keyframes rise{
     from{opacity:0; transform:translateY(18px) scale(.985);}
@@ -68,16 +81,34 @@
   .emblem-frame{
     display:flex; justify-content:center; margin-bottom:14px; position:relative;
   }
-  .emblem{
+  .emblem-clip{
     width:168px;height:168px;
     border-radius:50%;
-    object-fit:cover;
-    cursor:pointer;
+    overflow:hidden;
+    position:relative;
     box-shadow:
       0 0 0 3px rgba(13,9,5,0.9),
       0 0 0 4px rgba(181,117,47,0.55),
       0 8px 26px rgba(0,0,0,0.6);
     animation:emblow 5s ease-in-out infinite;
+  }
+  .emblem{
+    width:100%;height:100%;
+    object-fit:cover;
+    cursor:pointer;
+    display:block;
+  }
+  .emblem-sheen{
+    position:absolute; inset:-10%;
+    background:linear-gradient(115deg, transparent 40%, rgba(255,238,205,0.4) 50%, transparent 60%);
+    background-size:260% 260%;
+    animation:sheen 6.5s ease-in-out infinite;
+    mix-blend-mode:screen;
+    pointer-events:none;
+  }
+  @keyframes sheen{
+    0%{background-position:170% 0%;}
+    45%,100%{background-position:-60% 100%;}
   }
   @keyframes emblow{
     0%,100%{ filter:drop-shadow(0 0 2px rgba(232,189,129,0.25)) brightness(1); }
@@ -225,7 +256,10 @@
     <div class="content">
 
       <div class="emblem-frame">
-        <img class="emblem" id="emblemSvg" src="emblem-bronze.png" alt="Wappen">
+        <div class="emblem-clip">
+          <img class="emblem" id="emblemSvg" src="emblem-bronze.png" alt="Wappen">
+          <div class="emblem-sheen"></div>
+        </div>
       </div>
 
       <h1>Hussam Afour</h1>
@@ -264,14 +298,10 @@
           <div class="row-text"><div class="row-label">Webseite</div><div class="row-value">albatrosggmbh.de</div></div>
         </a>
 
-        <a class="row" href="https://www.linkedin.com/in/hussam-afour-5669b4244" target="_blank" rel="noopener">
-          <div class="icon"><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></div>
-          <div class="row-text"><div class="row-label">LinkedIn</div><div class="row-value">hussam-afour</div></div>
-        </a>
       </div>
 
       <div class="actions">
-        <a class="btn btn-primary" id="saveBtn" href="Hussam_Afour.vcf">
+        <a class="btn btn-primary" id="saveBtn" href="data:text/vcard;charset=utf-8,BEGIN%3AVCARD%0D%0AVERSION%3A3.0%0D%0AN%3AAfour%3BHussam%3B%3B%3B%0D%0AFN%3AHussam%20Afour%0D%0AORG%3AAlbatros%20gGmbH%0D%0ATITLE%3AStellvertretende%20Einrichtungsleitung%0D%0ATEL%3BTYPE%3DCELL%3A%2B4917619831222%0D%0ATEL%3BTYPE%3DWORK%2CVOICE%3A%2B4930403638428%0D%0ATEL%3BTYPE%3DWORK%2CVOICE%3A%2B4930403638424%0D%0AEMAIL%3BTYPE%3DWORK%3Ah.afour%40albatrosggmbh.de%0D%0AURL%3Ahttps%3A%2F%2Fwww.albatrosggmbh.de%0D%0AADR%3BTYPE%3DWORK%3A%3B%3BWartenberger%20Stra%C3%9Fe%20120%3BBerlin%3B%3B13053%3BDeutschland%0D%0ANOTE%3AGU%20Wartenberger%20Stra%C3%9Fe%20120%20%26%20GU%20Hagenower%20Ring%2047%2F49%0D%0AEND%3AVCARD%0D%0A">
           <svg viewBox="0 0 24 24" stroke="#17130a" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
           In Kontakte speichern
         </a>
