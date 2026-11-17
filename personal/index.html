@@ -46,11 +46,15 @@
     box-shadow:
       0 0 0 1px rgba(45,214,192,0.04) inset,
       0 30px 70px rgba(0,0,0,0.55);
-    animation:rise .7s cubic-bezier(.2,.8,.2,1);
+    animation:rise .7s cubic-bezier(.2,.8,.2,1), float 6s ease-in-out .7s infinite;
   }
   @keyframes rise{
     from{ opacity:0; transform:translateY(16px) scale(.98); }
     to{ opacity:1; transform:translateY(0) scale(1); }
+  }
+  @keyframes float{
+    0%,100%{ transform:translateY(0); }
+    50%{ transform:translateY(-6px); }
   }
   .glow-blob{
     position:absolute; top:-80px; left:50%; transform:translateX(-50%);
@@ -117,6 +121,11 @@
     opacity:.8;
     margin-bottom:16px;
     letter-spacing:.2px;
+    animation:pulseOpacity 2.6s ease-in-out infinite;
+  }
+  @keyframes pulseOpacity{
+    0%,100%{ opacity:.65; }
+    50%{ opacity:1; }
   }
 
   h1{
@@ -183,6 +192,12 @@
   .btn-primary{
     background:linear-gradient(135deg, var(--accent) 0%, var(--accent-dim) 100%);
     color:#06211d;
+    box-shadow:0 4px 16px rgba(45,214,192,0.22);
+    animation:btnGlow 3.4s ease-in-out infinite;
+  }
+  @keyframes btnGlow{
+    0%,100%{ box-shadow:0 4px 16px rgba(45,214,192,0.22); }
+    50%{ box-shadow:0 6px 24px rgba(45,214,192,0.45); }
   }
   .btn-secondary{
     background:transparent;
